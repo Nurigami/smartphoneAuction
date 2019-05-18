@@ -44,7 +44,6 @@ public class UserServiceImpl implements UserService {
         User u = userRepository.findById(user.getId()).orElse(null);
         if(u!=null){
             u.setFio(user.getFio());
-            u.setLogin(user.getLogin());
             u.setPassword(user.getPassword());
             u.setEmail(user.getEmail());
             u.setPhoneNumber(user.getPhoneNumber());

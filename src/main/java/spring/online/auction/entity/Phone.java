@@ -9,7 +9,7 @@ public class Phone {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String photo;
+    private String image;
     private String description;
     private String brand;
     private String color;
@@ -25,10 +25,9 @@ public class Phone {
     public Phone() {
     }
 
-    public Phone(String photo, String description, String brand, String color,
+    public Phone(String description, String brand, String color,
                  String opSystem, Double camResolution, Double screenSize, Integer storageMemory,
                  Double initialPrice, Double bidPrice, String sellerLogin) {
-        this.photo = photo;
         this.description = description;
         this.brand = brand;
         this.color = color;
@@ -50,12 +49,12 @@ public class Phone {
         this.id = id;
     }
 
-    public String getPhoto() {
-        return photo;
+    public String getImage() {
+        return image;
     }
 
-    public void setPhoto(String photo) {
-        this.photo = photo;
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getDescription() {
