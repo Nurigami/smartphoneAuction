@@ -1,32 +1,23 @@
 package spring.online.auction.entity;
 
-import javax.persistence.*;
-
-@Entity
-@Table(name = "a_timer")
 public class Timer {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long phoneId;
     private String timeLeft;
-    @ManyToOne
-    @JoinColumn(name = "phone_id")
-    private Phone phone;
 
     public Timer() {
     }
 
-    public Timer(String timeLeft, Phone phone) {
+    public Timer(Long phoneId, String timeLeft) {
+        this.phoneId = phoneId;
         this.timeLeft = timeLeft;
-        this.phone = phone;
     }
 
-    public Long getId() {
-        return id;
+    public Long getPhoneId() {
+        return phoneId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setId(Long phoneId) {
+        this.phoneId = phoneId;
     }
 
     public String getTimeLeft() {
@@ -37,11 +28,4 @@ public class Timer {
         this.timeLeft = timeLeft;
     }
 
-    public Phone getPhone() {
-        return phone;
-    }
-
-    public void setPhone(Phone phone) {
-        this.phone = phone;
-    }
 }

@@ -11,19 +11,17 @@ public class Bid {
     private Long id;
     private LocalDateTime bidTime;
     private String login;
-    private Double bidPrce;
-    @ManyToOne
-    @JoinColumn(name = "phone_id")
-    private Phone phone;
+    private Double bidPrice;
+    private Long phoneId;
 
     public Bid() {
     }
 
-    public Bid(String login, Double bidPrce, Phone phone) {
+    public Bid(String login, Double bidPrice, Long phoneId) {
         this.bidTime = LocalDateTime.now();
         this.login = login;
-        this.bidPrce = bidPrce;
-        this.phone = phone;
+        this.bidPrice = bidPrice;
+        this.phoneId = phoneId;
     }
 
     public Long getId() {
@@ -50,19 +48,19 @@ public class Bid {
         this.login = login;
     }
 
-    public Double getBidPrce() {
-        return bidPrce;
+    public Double getBidPrice() {
+        return bidPrice;
     }
 
-    public void setBidPrce(Double bidPrce) {
-        this.bidPrce = bidPrce;
+    public void setBidPrice(Double bidPrice) {
+        this.bidPrice = bidPrice;
     }
 
-    public Phone getPhone() {
-        return phone;
+    public Long getPhoneId() {
+        return phoneId;
     }
 
-    public void setPhone(Phone phone) {
-        this.phone = phone;
+    public void setPhoneId(Long phoneId) {
+        this.phoneId = phoneId;
     }
 }

@@ -6,12 +6,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import spring.online.auction.entity.Phone;
-import spring.online.auction.model.Brand;
+import spring.online.auction.entity.Timer;
 import spring.online.auction.model.Message;
 import spring.online.auction.model.PhoneModel;
-import spring.online.auction.repository.PhoneRepository;
 import spring.online.auction.service.PhoneService;
 
+import javax.websocket.server.PathParam;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
@@ -60,5 +60,15 @@ public class PhoneController {
     @DeleteMapping("/user/image/{id}")
     public ResponseEntity<Message> deleteImage(@PathVariable Long id){
         return new ResponseEntity<>(phoneService.deleteImage(id),HttpStatus.OK);
+    }
+
+    @GetMapping("/all/search")
+    public List<Phone> searchPhones(@PathParam("brand") String brand, @PathParam("color") String color, @PathParam("opSystem") String opSystem){
+        return phoneService.searchPhones(brand,color,opSystem);
+    }
+
+    @GetMapping("/all/time")
+    public List<Timer> getTimeLeft(){
+        return phoneService.getTimeLeft();
     }
 }

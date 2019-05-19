@@ -1,5 +1,9 @@
 package spring.online.auction.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -17,8 +21,11 @@ public class Phone {
     private Double camResolution;
     private Double screenSize;
     private Integer storageMemory;
-    private Double initialPrice;
-    private Double bidPrice;
+    private Double startingPrice;
+    private Double price;
+    @Column
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime dateTimePosted;
     private String sellerLogin;
 
@@ -27,7 +34,7 @@ public class Phone {
 
     public Phone(String description, String brand, String color,
                  String opSystem, Double camResolution, Double screenSize, Integer storageMemory,
-                 Double initialPrice, Double bidPrice, String sellerLogin) {
+                 Double startingPrice, String sellerLogin) {
         this.description = description;
         this.brand = brand;
         this.color = color;
@@ -35,8 +42,8 @@ public class Phone {
         this.camResolution = camResolution;
         this.screenSize = screenSize;
         this.storageMemory = storageMemory;
-        this.initialPrice = initialPrice;
-        this.bidPrice = bidPrice;
+        this.startingPrice = startingPrice;
+        this.price = startingPrice;
         this.dateTimePosted = LocalDateTime.now();
         this.sellerLogin = sellerLogin;
     }
@@ -114,19 +121,19 @@ public class Phone {
     }
 
     public Double getInitialPrice() {
-        return initialPrice;
+        return startingPrice;
     }
 
-    public void setInitialPrice(Double initialPrice) {
-        this.initialPrice = initialPrice;
+    public void setInitialPrice(Double startingPrice) {
+        this.startingPrice = startingPrice;
     }
 
-    public Double getBidPrice() {
-        return bidPrice;
+    public Double getPrice() {
+        return price;
     }
 
-    public void setBidPrice(Double bidPrice) {
-        this.bidPrice = bidPrice;
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
     public LocalDateTime getDateTimePosted() {
