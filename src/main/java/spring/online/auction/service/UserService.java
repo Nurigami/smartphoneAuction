@@ -13,4 +13,5 @@ public interface UserService {
     Message blockUser(Long userId);
     Message unblockUser(Long userId);
     List<User> getAllUsers();
+    User getUserByLogin(String login);
 }

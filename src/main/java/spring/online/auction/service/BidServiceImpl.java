@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import spring.online.auction.entity.Bid;
 import spring.online.auction.entity.Phone;
-import spring.online.auction.model.BidModel;
-import spring.online.auction.model.BidResponse;
+import spring.online.auction.model.request.BidModel;
+import spring.online.auction.model.response.BidResponse;
 import spring.online.auction.model.Message;
 import spring.online.auction.repository.BidRepository;
 import spring.online.auction.repository.PhoneRepository;
@@ -22,6 +22,9 @@ public class BidServiceImpl implements BidService {
     private PhoneRepository phoneRepository;
     @Autowired
     private BidRepository bidRepository;
+    @Autowired
+    private UserService userService;
+
     @Override
     public Message addBid(BidModel bidModel, String login) {
         Phone phone = phoneService.getPhoneById(bidModel.getPhoneId());
@@ -30,7 +33,7 @@ public class BidServiceImpl implements BidService {
         phoneRepository.save(phone);
         Bid bid = new Bid();
         bid.setBidTime(LocalDateTime.now());
-        bid.setLogin(login);
+        bid.setUser(userService.getUserByLogin(login));
         bid.setBidPrice(bidModel.getBidPrice());
         bid.setPhoneId(bidModel.getPhoneId());
         bidRepository.save(bid);
@@ -43,12 +46,14 @@ public class BidServiceImpl implements BidService {
     }
 
     @Override
-    public List<BidResponse> getBidsCount() {
-        List<Object[]> objects = bidRepository.getBidsCount();
-        List<BidResponse> bidResponses = new ArrayList<>();
-        for(Object[] object : objects){
-            bidResponses.add(new BidResponse((Long)object[0],(Long)object[1]));
-        }
-        return bidResponses;
+    public BidResponse getBidsCountByPhoneId(Long phoneId) {
+        Long count = bidRepository.getBidsCountByPhoneId(phoneId);
+        BidResponse bidResponse = new BidResponse(count);
+        return bidResponse;
+    }
+
+    @Override
+    public Bid getWinnerBid(Long phoneId) {
+        return bidRepository.getWinnerBid(phoneId);
     }
 }

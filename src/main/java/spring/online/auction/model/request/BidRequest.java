@@ -1,4 +1,4 @@
-package spring.online.auction.model;
+package spring.online.auction.model.request;
 
 public class BidModel {
     private Long phoneId;

@@ -8,11 +8,12 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name="a_phone")
-public class Phone {
+@Table(name="a_journal")
+public class Journal {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private Long phoneId;
     private String image;
     private String description;
     private String brand;
@@ -28,25 +29,31 @@ public class Phone {
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime dateTimePosted;
     private String sellerLogin;
-    private Boolean status = true;
+    private String login;
+    @Column
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    private LocalDateTime journalDate;
 
-    public Phone() {
+    public Journal() {
     }
 
-    public Phone(String description, String brand, String color,
-                 String opSystem, Double camResolution, Double screenSize, Integer storageMemory,
-                 Double startingPrice, String sellerLogin) {
-        this.description = description;
-        this.brand = brand;
-        this.color = color;
-        this.opSystem = opSystem;
-        this.camResolution = camResolution;
-        this.screenSize = screenSize;
-        this.storageMemory = storageMemory;
-        this.startingPrice = startingPrice;
-        this.price = startingPrice;
-        this.dateTimePosted = LocalDateTime.now();
-        this.sellerLogin = sellerLogin;
+    public Journal(Phone phone, String login) {
+        this.phoneId = phone.getId();
+        this.image = phone.getImage();
+        this.description = phone.getDescription();
+        this.brand = phone.getBrand();
+        this.color = phone.getColor();
+        this.opSystem = phone.getOpSystem();
+        this.camResolution= phone.getCamResolution();
+        this.screenSize = phone.getScreenSize();
+        this.storageMemory = phone.getStorageMemory();
+        this.startingPrice = phone.getStartingPrice();
+        this.price = phone.getPrice();
+        this.dateTimePosted = phone.getDateTimePosted();
+        this.sellerLogin = phone.getSellerLogin();
+        this.login = login;
+        this.journalDate = LocalDateTime.now();
     }
 
     public Long getId() {
@@ -55,6 +62,14 @@ public class Phone {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getPhoneId() {
+        return phoneId;
+    }
+
+    public void setPhoneId(Long phoneId) {
+        this.phoneId = phoneId;
     }
 
     public String getImage() {
@@ -153,11 +168,19 @@ public class Phone {
         this.sellerLogin = sellerLogin;
     }
 
-    public Boolean getStatus() {
-        return status;
+    public String getLogin() {
+        return login;
     }
 
-    public void setStatus(Boolean status) {
-        this.status = status;
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public LocalDateTime getJournalDate() {
+        return journalDate;
+    }
+
+    public void setJournalDate(LocalDateTime journalDate) {
+        this.journalDate = journalDate;
     }
 }

@@ -12,7 +12,13 @@ public interface BidRepository extends JpaRepository<Bid, Long> {
             "where b.phoneId = :id")
     List<Bid> getBidsByPhoneId(@Param("id") Long phoneId);
 
-    @Query("select b.phoneId, count(b.phoneId) from Bid b " +
-            "group by b.phoneId ")
-    List<Object[]> getBidsCount();
+    @Query("select count(b.phoneId) from Bid b " +
+            "where b.phoneId = :id ")
+    Long getBidsCountByPhoneId(@Param("id") Long phoneId);
+
+    @Query("select b from Bid b " +
+            "where b.phoneId = :id " +
+            "and b.bidPrice = (select max(b.bidPrice) " +
+            "from Bid b)")
+    Bid getWinnerBid(@Param("id") Long phoneId);
 }

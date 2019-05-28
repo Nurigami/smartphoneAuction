@@ -2,16 +2,16 @@ package spring.online.auction.service;
 
 import org.springframework.web.multipart.MultipartFile;
 import spring.online.auction.entity.Phone;
-import spring.online.auction.entity.Timer;
+import spring.online.auction.model.response.TimeResponse;
 import spring.online.auction.model.Message;
-import spring.online.auction.model.PhoneModel;
+import spring.online.auction.model.request.PhoneModel;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.List;
 
 public interface PhoneService {
     List<Phone> getAllPhones();
+    List<Phone> getAllActivePhones();
     Phone getPhoneById(Long id);
     Message addPhone(PhoneModel phoneModel, String sellerLogin);
     Message updatePhone(PhoneModel phoneModel);
@@ -20,5 +20,4 @@ public interface PhoneService {
     Message imageUpload(MultipartFile file, Long id) throws IOException;
     Message deleteImage(Long id);
     List<Phone> searchPhones(String brand, String color, String opSystem);
-    List<Timer> getTimeLeft();
 }

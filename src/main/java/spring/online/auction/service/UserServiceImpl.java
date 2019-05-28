@@ -20,7 +20,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public Message addUser(User user) {
         User u = userRepository.save(user);
-        System.out.println(u.getId()+u.getLogin());
         UserRole ur = new UserRole(u,"ROLE_USER");
         userRoleRepository.save(ur);
         return new Message("New user account is created");
@@ -80,4 +79,8 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll();
     }
 
+    @Override
+    public User getUserByLogin(String login) {
+        return userRepository.getUserByLogin(login);
+    }
 }

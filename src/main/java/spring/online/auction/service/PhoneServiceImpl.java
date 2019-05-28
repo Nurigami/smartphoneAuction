@@ -3,13 +3,10 @@ package spring.online.auction.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import spring.online.auction.entity.Phone;
-import spring.online.auction.entity.Timer;
+import spring.online.auction.model.request.PhoneModel;
+import spring.online.auction.model.response.TimeResponse;
 import spring.online.auction.model.*;
 import spring.online.auction.repository.PhoneRepository;
 
@@ -18,9 +15,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
-import java.time.Period;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -34,6 +29,11 @@ public class PhoneServiceImpl implements PhoneService {
     @Override
     public List<Phone> getAllPhones() {
         return phoneRepository.findAll();
+    }
+
+    @Override
+    public List<Phone> getAllActivePhones() {
+        return phoneRepository.getAllActivePhones();
     }
 
     @Override
@@ -51,7 +51,7 @@ public class PhoneServiceImpl implements PhoneService {
         phone.setCamResolution(phoneModel.getCamResolution());
         phone.setScreenSize(phoneModel.getScreenSize());
         phone.setStorageMemory(phoneModel.getStorageMemory());
-        phone.setInitialPrice(phoneModel.getInitialPrice());
+        phone.setStartingPrice(phoneModel.getInitialPrice());
         phone.setSellerLogin(sellerLogin);
         phone.setDateTimePosted(LocalDateTime.now());
         phoneRepository.save(phone);
@@ -69,7 +69,7 @@ public class PhoneServiceImpl implements PhoneService {
             phone.setCamResolution(phoneModel.getCamResolution());
             phone.setScreenSize(phoneModel.getScreenSize());
             phone.setStorageMemory(phoneModel.getStorageMemory());
-            phone.setInitialPrice(phoneModel.getInitialPrice());
+            phone.setStartingPrice(phoneModel.getInitialPrice());
             phoneRepository.save(phone);
             return new Message("Phone information is successfully updated.");
         }
@@ -128,43 +128,6 @@ public class PhoneServiceImpl implements PhoneService {
     @Override
     public List<Phone> searchPhones(String brand, String color, String opSystem) {
         return phoneRepository.searchPhones(brand,color,opSystem);
-    }
-
-    @Override
-    public List<Timer> getTimeLeft(){
-        List<Phone> phones = phoneRepository.findAll();
-        List<Timer> timer = new ArrayList<>();
-        for(Phone phone : phones){
-            Long diffMinutes = countTimeLeft(phone.getDateTimePosted());
-            if (diffMinutes > 1){
-                timer.add(new Timer(phone.getId(), sayTimeLeft(diffMinutes)));
-            } else {
-                //перекинуть в журнал
-                phoneRepository.delete(phone);
-                //отправить сообщение
-            }
-        }
-        return timer;
-    }
-
-    public static String sayTimeLeft(Long diffMinutes){
-        int days = (int) TimeUnit.MINUTES.toDays(diffMinutes);
-        long hours = TimeUnit.MINUTES.toHours(diffMinutes) - (days *24);
-        long minutes = TimeUnit.MINUTES.toMinutes(diffMinutes) - (TimeUnit.MINUTES.toHours(diffMinutes)* 60);
-        return days+" days, "+hours+" hours, "+minutes+" minutes left";
-    }
-
-    public static Long countTimeLeft(LocalDateTime dateTimePosted)
-    {
-        LocalDateTime nowDateTime = LocalDateTime.now();
-        LocalDateTime endDateTime = dateTimePosted.plusDays(7);
-        Long diffMinutes = nowDateTime.until(endDateTime,ChronoUnit.MINUTES);
-        return diffMinutes;
-    }
-
-    @Scheduled(fixedRate = 60000)
-    public void scheduleTaskWithFixedRate() {
-        //getTimeLeft();
     }
 
 }

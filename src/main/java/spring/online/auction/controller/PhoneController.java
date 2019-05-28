@@ -6,9 +6,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import spring.online.auction.entity.Phone;
-import spring.online.auction.entity.Timer;
+import spring.online.auction.model.response.TimeResponse;
 import spring.online.auction.model.Message;
-import spring.online.auction.model.PhoneModel;
+import spring.online.auction.model.request.PhoneModel;
 import spring.online.auction.service.PhoneService;
 
 import javax.websocket.server.PathParam;
@@ -67,8 +67,4 @@ public class PhoneController {
         return phoneService.searchPhones(brand,color,opSystem);
     }
 
-    @GetMapping("/all/time")
-    public List<Timer> getTimeLeft(){
-        return phoneService.getTimeLeft();
-    }
 }

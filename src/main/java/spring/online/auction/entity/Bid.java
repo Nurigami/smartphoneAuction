@@ -10,16 +10,18 @@ public class Bid {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private LocalDateTime bidTime;
-    private String login;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
     private Double bidPrice;
     private Long phoneId;
 
     public Bid() {
     }
 
-    public Bid(String login, Double bidPrice, Long phoneId) {
+    public Bid(User user, Double bidPrice, Long phoneId) {
         this.bidTime = LocalDateTime.now();
-        this.login = login;
+        this.user = user;
         this.bidPrice = bidPrice;
         this.phoneId = phoneId;
     }
@@ -40,12 +42,12 @@ public class Bid {
         this.bidTime = bidTime;
     }
 
-    public String getLogin() {
-        return login;
+    public User getUser() {
+        return user;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Double getBidPrice() {
