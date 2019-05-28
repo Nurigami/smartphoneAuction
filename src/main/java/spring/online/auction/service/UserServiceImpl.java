@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import spring.online.auction.entity.User;
 import spring.online.auction.entity.UserRole;
-import spring.online.auction.model.Message;
+import spring.online.auction.model.response.Message;
 import spring.online.auction.repository.UserRepository;
 import spring.online.auction.repository.UserRoleRepository;
 

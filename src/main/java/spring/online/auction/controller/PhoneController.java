@@ -6,9 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import spring.online.auction.entity.Phone;
-import spring.online.auction.model.response.TimeResponse;
-import spring.online.auction.model.Message;
-import spring.online.auction.model.request.PhoneModel;
+import spring.online.auction.model.response.Message;
 import spring.online.auction.service.PhoneService;
 
 import javax.websocket.server.PathParam;
@@ -33,13 +31,13 @@ public class PhoneController {
     }
 
     @PostMapping("/user")
-    public ResponseEntity<Message> addPhone(@RequestBody PhoneModel phoneModel, Principal principal){
-        return new ResponseEntity<>(phoneService.addPhone(phoneModel, principal.getName()), HttpStatus.OK);
+    public ResponseEntity<Message> addPhone(@RequestBody Phone phone, Principal principal){
+        return new ResponseEntity<>(phoneService.addPhone(phone, principal.getName()), HttpStatus.OK);
     }
 
     @PutMapping("/user")
-    public ResponseEntity<Message> updatePhone(@RequestBody PhoneModel phoneModel){
-        return new ResponseEntity<>(phoneService.updatePhone(phoneModel),HttpStatus.OK);
+    public ResponseEntity<Message> updatePhone(@RequestBody Phone phone){
+        return new ResponseEntity<>(phoneService.updatePhone(phone),HttpStatus.OK);
     }
 
     @DeleteMapping("/admin/{id}")
@@ -63,8 +61,8 @@ public class PhoneController {
     }
 
     @GetMapping("/all/search")
-    public List<Phone> searchPhones(@PathParam("brand") String brand, @PathParam("color") String color, @PathParam("opSystem") String opSystem){
-        return phoneService.searchPhones(brand,color,opSystem);
+    public List<Phone> searchPhones(@RequestParam("brand") Long brandId){
+        return phoneService.searchPhones(brandId);
     }
 
 }

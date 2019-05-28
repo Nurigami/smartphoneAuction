@@ -1,7 +1,7 @@
 package spring.online.auction.service;
 
 import spring.online.auction.entity.User;
-import spring.online.auction.model.Message;
+import spring.online.auction.model.response.Message;
 
 import java.util.List;
 

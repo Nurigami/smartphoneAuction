@@ -14,39 +14,61 @@ public class Phone {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String image;
+    private String title;
     private String description;
-    private String brand;
-    private String color;
-    private String opSystem;
-    private Double camResolution;
-    private Double screenSize;
-    private Integer storageMemory;
+    private String sellerLogin;
+    @ManyToOne
+    @JoinColumn(name = "brand_id")
+    private Brand brand;
+    @ManyToOne
+    @JoinColumn(name = "color_id")
+    private Color color;
+    @ManyToOne
+    @JoinColumn(name = "os_id")
+    private OS os;
+    @ManyToOne
+    @JoinColumn(name = "model_id")
+    private Model model;
+    @ManyToOne
+    @JoinColumn(name = "resolution_id")
+    private Resolution resolution;
+    @ManyToOne
+    @JoinColumn(name = "size_id")
+    private Size size;
+    @ManyToOne
+    @JoinColumn(name = "memory_id")
+    private Memory memory;
     private Double startingPrice;
     private Double price;
     @Column
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime dateTimePosted;
-    private String sellerLogin;
+    @Column
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    private LocalDateTime dateTimeDeleted;
     private Boolean status = true;
 
     public Phone() {
     }
 
-    public Phone(String description, String brand, String color,
-                 String opSystem, Double camResolution, Double screenSize, Integer storageMemory,
-                 Double startingPrice, String sellerLogin) {
+    public Phone(String title, String description, String sellerLogin, Brand brand,
+                 Color color, OS os, Model model, Resolution resolution, Size size,
+                 Memory memory, Double startingPrice) {
+        this.title = title;
         this.description = description;
+        this.sellerLogin = sellerLogin;
         this.brand = brand;
         this.color = color;
-        this.opSystem = opSystem;
-        this.camResolution = camResolution;
-        this.screenSize = screenSize;
-        this.storageMemory = storageMemory;
+        this.os = os;
+        this.model = model;
+        this.resolution = resolution;
+        this.size = size;
+        this.memory = memory;
         this.startingPrice = startingPrice;
-        this.price = startingPrice;
-        this.dateTimePosted = LocalDateTime.now();
-        this.sellerLogin = sellerLogin;
+        price = startingPrice;
+        dateTimePosted = LocalDateTime.now();
     }
 
     public Long getId() {
@@ -65,6 +87,14 @@ public class Phone {
         this.image = image;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -73,52 +103,68 @@ public class Phone {
         this.description = description;
     }
 
-    public String getBrand() {
+    public String getSellerLogin() {
+        return sellerLogin;
+    }
+
+    public void setSellerLogin(String sellerLogin) {
+        this.sellerLogin = sellerLogin;
+    }
+
+    public Brand getBrand() {
         return brand;
     }
 
-    public void setBrand(String brand) {
+    public void setBrand(Brand brand) {
         this.brand = brand;
     }
 
-    public String getColor() {
+    public Color getColor() {
         return color;
     }
 
-    public void setColor(String color) {
+    public void setColor(Color color) {
         this.color = color;
     }
 
-    public String getOpSystem() {
-        return opSystem;
+    public OS getOs() {
+        return os;
     }
 
-    public void setOpSystem(String opSystem) {
-        this.opSystem = opSystem;
+    public void setOs(OS os) {
+        this.os = os;
     }
 
-    public Double getCamResolution() {
-        return camResolution;
+    public Model getModel() {
+        return model;
     }
 
-    public void setCamResolution(Double camResolution) {
-        this.camResolution = camResolution;
+    public void setModel(Model model) {
+        this.model = model;
     }
 
-    public Double getScreenSize() {
-        return screenSize;
+    public Resolution getResolution() {
+        return resolution;
     }
 
-    public void setScreenSize(Double screenSize) {
-        this.screenSize = screenSize;
+    public void setResolution(Resolution resolution) {
+        this.resolution = resolution;
     }
 
-    public Integer getStorageMemory() {
-        return storageMemory;
+    public Size getSize() {
+        return size;
     }
 
-    public void setStorageMemory(Integer storageMemory) {
-        this.storageMemory = storageMemory;
+    public void setSize(Size size) {
+        this.size = size;
+    }
+
+    public Memory getMemory() {
+        return memory;
+    }
+
+    public void setMemory(Memory memory) {
+        this.memory = memory;
     }
 
     public Double getStartingPrice() {
@@ -145,12 +191,12 @@ public class Phone {
         this.dateTimePosted = dateTimePosted;
     }
 
-    public String getSellerLogin() {
-        return sellerLogin;
+    public LocalDateTime getDateTimeDeleted() {
+        return dateTimeDeleted;
     }
 
-    public void setSellerLogin(String sellerLogin) {
-        this.sellerLogin = sellerLogin;
+    public void setDateTimeDeleted(LocalDateTime dateTimeDeleted) {
+        this.dateTimeDeleted = dateTimeDeleted;
     }
 
     public Boolean getStatus() {

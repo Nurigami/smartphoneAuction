@@ -5,9 +5,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import spring.online.auction.entity.Bid;
-import spring.online.auction.model.request.BidModel;
+import spring.online.auction.model.request.BidRequest;
 import spring.online.auction.model.response.BidResponse;
-import spring.online.auction.model.Message;
+import spring.online.auction.model.response.Message;
 import spring.online.auction.service.BidService;
 
 import java.security.Principal;
@@ -21,8 +21,8 @@ public class BidController {
     private BidService bidService;
 
     @PostMapping("/user")
-    public ResponseEntity<Message> addBid(@RequestBody BidModel bidModel, Principal principal){
-        return new ResponseEntity<>(bidService.addBid(bidModel,principal.getName()), HttpStatus.OK);
+    public ResponseEntity<Message> addBid(@RequestBody BidRequest bidRequest, Principal principal){
+        return new ResponseEntity<>(bidService.addBid(bidRequest,principal.getName()), HttpStatus.OK);
     }
 
     @GetMapping("/user/list/{phoneId}")

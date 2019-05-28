@@ -1,4 +1,4 @@
-package spring.online.auction.model;
+package spring.online.auction.model.response;
 
 public class Message {
     private String text;

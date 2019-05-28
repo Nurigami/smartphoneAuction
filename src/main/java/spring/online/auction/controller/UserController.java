@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import spring.online.auction.entity.User;
-import spring.online.auction.model.Message;
+import spring.online.auction.model.response.Message;
 import spring.online.auction.service.UserService;
 
 import java.util.List;

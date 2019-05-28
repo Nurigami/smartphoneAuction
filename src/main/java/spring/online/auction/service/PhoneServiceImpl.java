@@ -1,12 +1,10 @@
 package spring.online.auction.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import spring.online.auction.entity.Phone;
-import spring.online.auction.model.request.PhoneModel;
-import spring.online.auction.model.response.TimeResponse;
+import spring.online.auction.model.response.Message;
 import spring.online.auction.model.*;
 import spring.online.auction.repository.PhoneRepository;
 
@@ -15,9 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 @Service
 public class PhoneServiceImpl implements PhoneService {
@@ -42,16 +38,7 @@ public class PhoneServiceImpl implements PhoneService {
     }
 
     @Override
-    public Message addPhone(PhoneModel phoneModel, String sellerLogin) {
-        Phone phone = new Phone();
-        phone.setDescription(phoneModel.getDescription());
-        phone.setBrand(Brand.valueOf(phoneModel.getBrand()).toString());
-        phone.setColor(Color.valueOf(phoneModel.getColor()).toString());
-        phone.setOpSystem(OpSystem.valueOf(phoneModel.getOpSystem()).toString());
-        phone.setCamResolution(phoneModel.getCamResolution());
-        phone.setScreenSize(phoneModel.getScreenSize());
-        phone.setStorageMemory(phoneModel.getStorageMemory());
-        phone.setStartingPrice(phoneModel.getInitialPrice());
+    public Message addPhone(Phone phone, String sellerLogin) {
         phone.setSellerLogin(sellerLogin);
         phone.setDateTimePosted(LocalDateTime.now());
         phoneRepository.save(phone);
@@ -59,21 +46,22 @@ public class PhoneServiceImpl implements PhoneService {
     }
 
     @Override
-    public Message updatePhone(PhoneModel phoneModel) {
-        Phone phone = phoneRepository.findById(phoneModel.getPhoneId()).orElse(null);
-        if(phone!=null){
-            phone.setDescription(phoneModel.getDescription());
-            phone.setBrand(Brand.valueOf(phoneModel.getBrand()).toString());
-            phone.setColor(Color.valueOf(phoneModel.getColor()).toString());
-            phone.setOpSystem(OpSystem.valueOf(phoneModel.getOpSystem()).toString());
-            phone.setCamResolution(phoneModel.getCamResolution());
-            phone.setScreenSize(phoneModel.getScreenSize());
-            phone.setStorageMemory(phoneModel.getStorageMemory());
-            phone.setStartingPrice(phoneModel.getInitialPrice());
-            phoneRepository.save(phone);
+    public Message updatePhone(Phone phone) {
+        Phone p = phoneRepository.findById(phone.getId()).orElse(null);
+        if(p!=null){
+            p.setTitle(phone.getTitle());
+            p.setDescription(phone.getDescription());
+            p.setBrand(phone.getBrand());
+            p.setColor(phone.getColor());
+            p.setMemory(phone.getMemory());
+            p.setResolution(phone.getResolution());
+            p.setOs(phone.getOs());
+            p.setModel(phone.getModel());
+            p.setSize(phone.getSize());
+            phoneRepository.save(p);
             return new Message("Phone information is successfully updated.");
         }
-        return new Message("Phone with id " + phoneModel.getPhoneId() + " does not exist");
+        return new Message("Phone with id " + phone.getId() + " does not exist");
     }
 
     @Override
@@ -126,8 +114,8 @@ public class PhoneServiceImpl implements PhoneService {
     }
 
     @Override
-    public List<Phone> searchPhones(String brand, String color, String opSystem) {
-        return phoneRepository.searchPhones(brand,color,opSystem);
+    public List<Phone> searchPhones(Long brandId) {
+        return phoneRepository.searchPhones(brandId);
     }
 
 }

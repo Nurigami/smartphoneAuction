@@ -1,13 +1,13 @@
 package spring.online.auction.model.request;
 
-public class BidModel {
+public class BidRequest {
     private Long phoneId;
     private Double bidPrice;
 
-    public BidModel() {
+    public BidRequest() {
     }
 
-    public BidModel(Long phoneId, Double bidPrice) {
+    public BidRequest(Long phoneId, Double bidPrice) {
         this.phoneId = phoneId;
         this.bidPrice = bidPrice;
     }
