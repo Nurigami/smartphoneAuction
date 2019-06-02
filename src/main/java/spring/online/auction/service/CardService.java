@@ -1,6 +1,6 @@
 package spring.online.auction.service;
 
-import spring.online.auction.model.Card;
+import spring.online.auction.model.response.Card;
 
 import java.util.List;
 

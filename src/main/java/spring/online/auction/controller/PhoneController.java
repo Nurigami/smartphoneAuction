@@ -61,8 +61,14 @@ public class PhoneController {
     }
 
     @GetMapping("/all/search")
-    public List<Phone> searchPhones(@RequestParam("brand") Long brandId){
-        return phoneService.searchPhones(brandId);
+    public List<Phone> searchPhones(@RequestParam(value = "brand",required = false) Long brandId,
+                                    @RequestParam(value = "color", required = false) Long colorId,
+                                    @RequestParam(value = "memory", required = false) Long memoryId,
+                                    @RequestParam(value = "model", required = false) Long modelId,
+                                    @RequestParam(value = "os", required = false) Long osId,
+                                    @RequestParam(value = "resolution", required = false) Long resolutionId,
+                                    @RequestParam(value = "size", required = false) Long sizeId){
+        return phoneService.searchPhones(brandId, colorId, memoryId, modelId, osId, resolutionId, sizeId);
     }
 
 }

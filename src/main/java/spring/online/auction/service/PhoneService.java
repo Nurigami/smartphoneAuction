@@ -17,5 +17,6 @@ public interface PhoneService {
     List<Phone> getPhonesOfUser(String sellerLogin);
     Message imageUpload(MultipartFile file, Long id) throws IOException;
     Message deleteImage(Long id);
-    List<Phone> searchPhones(Long brandId);
+    List<Phone> searchPhones(Long brandId, Long colorId, Long memoryId, Long modelId,
+                             Long osId, Long resolutionId, Long sizeId);
 }

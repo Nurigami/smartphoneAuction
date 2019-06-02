@@ -114,8 +114,9 @@ public class PhoneServiceImpl implements PhoneService {
     }
 
     @Override
-    public List<Phone> searchPhones(Long brandId) {
-        return phoneRepository.searchPhones(brandId);
+    public List<Phone> searchPhones(Long brandId, Long colorId, Long memoryId, Long modelId,
+                                    Long osId, Long resolutionId, Long sizeId) {
+        return phoneRepository.searchPhones(brandId, colorId, memoryId, modelId, osId, resolutionId, sizeId);
     }
 
 }
