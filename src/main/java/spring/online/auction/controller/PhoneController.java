@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import spring.online.auction.entity.Phone;
 import spring.online.auction.model.response.Message;
+import spring.online.auction.model.response.PhoneResponse;
 import spring.online.auction.service.PhoneService;
 
 import javax.websocket.server.PathParam;
@@ -71,4 +72,18 @@ public class PhoneController {
         return phoneService.searchPhones(brandId, colorId, memoryId, modelId, osId, resolutionId, sizeId);
     }
 
+    @GetMapping("/all/search/price")
+    List<Phone> searchPhonesByPrice(@RequestParam Double priceOne, @RequestParam Double priceTwo){
+        return phoneService.searchPhonesByPrice(priceOne, priceTwo);
+    }
+
+    @GetMapping("/all/product")
+    public ResponseEntity<List<PhoneResponse>> getAllPhoneResponses(){
+        return new ResponseEntity<>(phoneService.getAllPhoneResponses(), HttpStatus.OK);
+    }
+
+    @GetMapping("/all/product/{phoneId}")
+    public PhoneResponse getPhoneResponseById(@PathVariable Long phoneId){
+        return phoneService.getPhoneResponseById(phoneId);
+    }
 }

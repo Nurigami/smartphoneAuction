@@ -8,7 +8,7 @@ import spring.online.auction.entity.Phone;
 import java.util.List;
 
 public interface PhoneRepository extends JpaRepository<Phone, Long> {
-    @Query("SELECT p FROM Phone p WHERE p.brand.id = :brand or :brand is null " +
+    @Query("select p from Phone p where p.brand.id = :brand or :brand is null " +
             "and p.color.id = :color or :color is null " +
             "and p.memory.id = :memory or :memory is null " +
             "and p.model.id = :model or :model is null " +
@@ -20,8 +20,9 @@ public interface PhoneRepository extends JpaRepository<Phone, Long> {
                              @Param("os") Long osId, @Param("resolution") Long resolutionId,
                              @Param("size") Long sizeId);
 
-    @Query("SELECT p from Phone p WHERE p.status = true ")
+    @Query("select p from Phone p where p.status = true ")
     List<Phone> getAllActivePhones();
 
-
+    @Query("select p from Phone p where p.price between :priceOne and :priceTwo ")
+    List<Phone> searchPhonesByPrice(@Param("priceOne") Double priceOne, @Param("priceTwo") Double priceTwo);
 }

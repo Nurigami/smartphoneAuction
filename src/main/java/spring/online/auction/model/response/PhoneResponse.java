@@ -2,17 +2,17 @@ package spring.online.auction.model.response;
 
 import spring.online.auction.entity.Phone;
 
-public class Card {
+public class PhoneResponse {
     private Phone phone;
     private TimeResponse timeResponse;
     private BidResponse bidResponse;
     private WatchlistResponse watchlistResponse;
     private CommentResponse commentResponse;
 
-    public Card() {
+    public PhoneResponse() {
     }
 
-    public Card(Phone phone, TimeResponse timeResponse, BidResponse bidResponse, WatchlistResponse watchlistResponse, CommentResponse commentResponse) {
+    public PhoneResponse(Phone phone, TimeResponse timeResponse, BidResponse bidResponse, WatchlistResponse watchlistResponse, CommentResponse commentResponse) {
         this.phone = phone;
         this.timeResponse = timeResponse;
         this.bidResponse = bidResponse;

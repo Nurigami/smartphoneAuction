@@ -19,6 +19,9 @@ public class CommentServiceImpl implements CommentService {
     private PhoneService phoneService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private EmailService emailService;
+
     @Override
     public CommentResponse getCommentsCountByPhoneId(Long phoneId) {
         return new CommentResponse(commentRepository.getCommentsCountByPhoneId(phoneId));
@@ -30,6 +33,8 @@ public class CommentServiceImpl implements CommentService {
         User user = userService.getUserByLogin(login);
         Comment comment = new Comment(user,phone,text);
         commentRepository.save(comment);
+        emailService.sendEmail("New comment recieved","New comment is recieved from clients: "+
+                comment.getText(),emailService.getSellerEmail(phoneId));
         return new Message("Comment is added");
     }
 

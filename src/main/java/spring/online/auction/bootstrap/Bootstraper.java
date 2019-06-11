@@ -33,7 +33,7 @@ public class Bootstraper implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        /*User u1 = new User("fio","nuri", "123","sample@gmail.com","num");
+        User u1 = new User("fio","nuri", "123","sample@gmail.com","num");
         User u2 = new User("fio","gami", "456","sample@gmail.com","num2");
         User u3 = new User("fio","uu", "333","sample@gmail.com","num3");
         userRepository.save(u1);
@@ -61,6 +61,8 @@ public class Bootstraper implements CommandLineRunner {
         Size s2 = new Size(7.5);
         Phone p1 = new Phone("title","desc","nuri",b1,c1,o1,m1,r1,s2,me1,1200d);
         Phone p2 = new Phone("title","desc","nuri",b2,c2,o2,m2,r2,s2,me2,1100d);
+        Phone p3 = new Phone("title","desc","nuri",b2,c2,o2,m2,r2,s2,me2,800d);
+        Phone p4 = new Phone("title","desc","nuri",b2,c2,o2,m2,r2,s2,me2,700d);
 
         brandRepository.save(b1);
         brandRepository.save(b2);
@@ -77,7 +79,9 @@ public class Bootstraper implements CommandLineRunner {
         sizeRepository.save(s1);
         sizeRepository.save(s2);
         phoneRepository.save(p1);
-        phoneRepository.save(p2);*/
+        phoneRepository.save(p2);
+        phoneRepository.save(p3);
+        phoneRepository.save(p4);
 
     }
 }

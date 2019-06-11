@@ -3,6 +3,7 @@ package spring.online.auction.service;
 import org.springframework.web.multipart.MultipartFile;
 import spring.online.auction.entity.Phone;
 import spring.online.auction.model.response.Message;
+import spring.online.auction.model.response.PhoneResponse;
 
 import java.io.IOException;
 import java.util.List;
@@ -19,4 +20,7 @@ public interface PhoneService {
     Message deleteImage(Long id);
     List<Phone> searchPhones(Long brandId, Long colorId, Long memoryId, Long modelId,
                              Long osId, Long resolutionId, Long sizeId);
+    List<Phone> searchPhonesByPrice(Double priceOne, Double priceTwo);
+    List<PhoneResponse> getAllPhoneResponses();
+    PhoneResponse getPhoneResponseById(Long phoneId);
 }

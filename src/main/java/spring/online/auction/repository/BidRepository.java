@@ -19,6 +19,6 @@ public interface BidRepository extends JpaRepository<Bid, Long> {
     @Query("select b from Bid b " +
             "where b.phoneId = :id " +
             "and b.bidPrice = (select max(b.bidPrice) " +
-            "from Bid b)")
+            "from Bid b where b.phoneId = :id)")
     Bid getWinnerBid(@Param("id") Long phoneId);
 }

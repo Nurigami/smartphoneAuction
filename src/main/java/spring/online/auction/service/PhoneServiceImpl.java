@@ -6,6 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 import spring.online.auction.entity.Phone;
 import spring.online.auction.model.response.Message;
 import spring.online.auction.model.*;
+import spring.online.auction.model.response.PhoneResponse;
 import spring.online.auction.repository.PhoneRepository;
 
 import java.io.IOException;
@@ -13,6 +14,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -21,6 +23,14 @@ public class PhoneServiceImpl implements PhoneService {
 
     @Autowired
     private PhoneRepository phoneRepository;
+    @Autowired
+    private TimeService timeService;
+    @Autowired
+    private BidService bidService;
+    @Autowired
+    private WatchlistService watchlistService;
+    @Autowired
+    private CommentService commentService;
 
     @Override
     public List<Phone> getAllPhones() {
@@ -81,11 +91,11 @@ public class PhoneServiceImpl implements PhoneService {
 
     @Override
     public Message imageUpload(MultipartFile file, Long id) throws IOException {
-        String fileName = addImage(file);
-        Phone phone = phoneRepository.findById(id).orElse(null);
-        if(phone == null) return null;
-        phone.setImage(fileName);
-        phoneRepository.save(phone);
+            String fileName = addImage(file);
+            Phone phone = phoneRepository.findById(id).orElse(null);
+            if (phone == null) return null;
+            phone.setImage(fileName);
+            phoneRepository.save(phone);
         return new Message("Image is uploaded");
     }
 
@@ -119,4 +129,26 @@ public class PhoneServiceImpl implements PhoneService {
         return phoneRepository.searchPhones(brandId, colorId, memoryId, modelId, osId, resolutionId, sizeId);
     }
 
+    @Override
+    public List<Phone> searchPhonesByPrice(Double priceOne, Double priceTwo){
+        return phoneRepository.searchPhonesByPrice(priceOne, priceTwo);
+    }
+
+    @Override
+    public List<PhoneResponse> getAllPhoneResponses() {
+        List<Phone> phones = getAllActivePhones();
+        List<PhoneResponse> phoneResponses = new ArrayList<>();
+        for(Phone phone : phones){
+            phoneResponses.add(new PhoneResponse(phone, timeService.getTimeLeftByPhoneId(phone.getId()),bidService.getBidsCountByPhoneId(phone.getId()),
+                    watchlistService.getWatchersCountByPhoneId(phone.getId()),commentService.getCommentsCountByPhoneId(phone.getId())));
+        }
+        return phoneResponses;
+    }
+
+    @Override
+    public PhoneResponse getPhoneResponseById(Long phoneId) {
+        Phone phone = getPhoneById(phoneId);
+        return new PhoneResponse(phone, timeService.getTimeLeftByPhoneId(phone.getId()),bidService.getBidsCountByPhoneId(phone.getId()),
+                watchlistService.getWatchersCountByPhoneId(phone.getId()),commentService.getCommentsCountByPhoneId(phone.getId()));
+    }
 }

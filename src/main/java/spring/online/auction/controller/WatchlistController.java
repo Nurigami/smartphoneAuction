@@ -2,7 +2,7 @@ package spring.online.auction.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import spring.online.auction.model.response.Card;
+import spring.online.auction.model.response.PhoneResponse;
 import spring.online.auction.model.response.Message;
 import spring.online.auction.service.WatchlistService;
 
@@ -29,7 +29,7 @@ public class WatchlistController {
         return watchlistService.removeFromWatchlist(phoneId);
     }
     @GetMapping("/user")
-    public List<Card> getWatchItemsOfUser(Principal principal){
+    public List<PhoneResponse> getWatchItemsOfUser(Principal principal){
         return watchlistService.getWatchItemsOfUser(principal.getName());
     }
 }

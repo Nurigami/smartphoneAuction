@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import spring.online.auction.entity.Phone;
 import spring.online.auction.entity.User;
 import spring.online.auction.entity.Watchlist;
-import spring.online.auction.model.response.Card;
+import spring.online.auction.model.response.PhoneResponse;
 import spring.online.auction.model.response.Message;
 import spring.online.auction.model.response.WatchlistResponse;
 import spring.online.auction.repository.WatchlistRepository;
@@ -66,17 +66,17 @@ public class WatchlistServiceImpl implements WatchlistService {
     }
 
     @Override
-    public List<Card> getWatchItemsOfUser(String login) {
+    public List<PhoneResponse> getWatchItemsOfUser(String login) {
         User user = userService.getUserByLogin(login);
         List<Watchlist> watchlists = watchlistRepository.getWatchItemsOfUser(user.getId());
-        List<Card> cards = new ArrayList<>();
+        List<PhoneResponse> phoneResponsOnes = new ArrayList<>();
         for(Watchlist watchlist : watchlists){
-            cards.add(new Card(watchlist.getPhone(),timeService.getTimeLeftByPhoneId(watchlist.getPhone().getId()),
+            phoneResponsOnes.add(new PhoneResponse(watchlist.getPhone(), timeService.getTimeLeftByPhoneId(watchlist.getPhone().getId()),
                     bidService.getBidsCountByPhoneId(watchlist.getPhone().getId()),
                     watchlistService.getWatchersCountByPhoneId(watchlist.getPhone().getId()),
                     commentService.getCommentsCountByPhoneId(watchlist.getPhone().getId())));
         }
-        return cards;
+        return phoneResponsOnes;
     }
 
     @Override

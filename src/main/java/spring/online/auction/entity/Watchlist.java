@@ -3,7 +3,7 @@ package spring.online.auction.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "a_watchlist")
+@Table(name = "a_watchlist", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id","phone_id"})})
 public class Watchlist {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
