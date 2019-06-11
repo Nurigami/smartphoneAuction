@@ -47,8 +47,8 @@ public class Bootstraper implements CommandLineRunner {
         userRoleRepository.save(user2);
         Brand b1 = new Brand("Apple");
         Brand b2 = new Brand("Samsung");
-        Model m1 = new Model("S7",b1);
-        Model m2 = new Model("Galaxy S5",b2);
+        Model m1 = new Model("S7");
+        Model m2 = new Model("Galaxy S5");
         Color c1 = new Color("Silver");
         Color c2 = new Color("Black");
         Memory me1 = new Memory(3d);

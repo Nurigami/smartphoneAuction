@@ -9,16 +9,12 @@ public class Model {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-    @ManyToOne
-    @JoinColumn(name = "brand_id")
-    private Brand brand;
 
     public Model() {
     }
 
-    public Model(String name, Brand brand) {
+    public Model(String name) {
         this.name = name;
-        this.brand = brand;
     }
 
     public Long getId() {
@@ -37,11 +33,4 @@ public class Model {
         this.name = name;
     }
 
-    public Brand getBrand() {
-        return brand;
-    }
-
-    public void setBrand(Brand brand) {
-        this.brand = brand;
-    }
 }

@@ -9,9 +9,6 @@ public class OS {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-    @ManyToOne
-    @JoinColumn(name = "brand_id")
-    private Brand brand;
 
     public OS() {
     }
@@ -34,13 +31,5 @@ public class OS {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Brand getBrand() {
-        return brand;
-    }
-
-    public void setBrand(Brand brand) {
-        this.brand = brand;
     }
 }
